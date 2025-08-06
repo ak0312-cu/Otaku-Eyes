@@ -30,8 +30,18 @@ const gameSlice = createSlice({
       });
     },
     nextScene: (state) => {
-      const nextIndex = Math.floor(Math.random() * scenes.length);
-      state.currentScene = scenes[nextIndex];
+      if (!state.correct) {
+        // Block progression if last guess was incorrect
+        state.guess = 'Answer correctly to move ahead.';
+        return;
+      }
+
+      let nextScene;
+      do {
+        nextScene = scenes[Math.floor(Math.random() * scenes.length)];
+      } while (nextScene === state.currentScene && scenes.length > 1);
+
+      state.currentScene = nextScene;
       state.correct = false;
       state.guess = '';
     },

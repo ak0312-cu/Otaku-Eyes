@@ -10,9 +10,15 @@ const Game = () => {
     dispatch(submitGuess(guess));
   };
 
+  const handleNext = () => {
+    dispatch(nextScene());
+  };
+
+  const isBlockedMessage = guess === 'Answer correctly to move ahead.';
+
   return (
     <div style={{ textAlign: 'center', marginTop: '40px' }}>
-      <h2>Guess the Anime</h2>
+      <h2>Which Anime Is This?</h2>
       <img
         src={currentScene.image}
         alt="Anime Scene"
@@ -21,17 +27,28 @@ const Game = () => {
       <div>
         <input
           type="text"
-          value={guess}
+          value={isBlockedMessage ? '' : guess}  
           onChange={(e) => dispatch(updateGuess(e.target.value))}
           placeholder="Type anime title"
         />
         <button onClick={handleSubmit}>Submit</button>
-        <button onClick={() => dispatch(nextScene())} style={{ marginLeft: '10px' }}>
+        <button onClick={handleNext} style={{ marginLeft: '10px' }}>
           Next
         </button>
       </div>
+
+      {/* ✅ Correct */}
       {correct && <p style={{ color: 'lightgreen' }}>Correct! 🎉</p>}
-      {!correct && guess && <p style={{ color: 'salmon' }}>Try again!</p>}
+
+      {/* ❌ Wrong but not blocked */}
+      {!correct && guess && !isBlockedMessage && (
+        <p style={{ color: 'salmon' }}>Try again!</p>
+      )}
+
+      {/* 🚫 Blocked from proceeding */}
+      {isBlockedMessage && (
+        <p style={{ color: 'orange', fontWeight: 'bold' }}>{guess}</p>
+      )}
     </div>
   );
 };
