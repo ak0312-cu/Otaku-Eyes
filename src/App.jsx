@@ -7,7 +7,7 @@ function App() {
   return (
     <div className='background-container'>
       <div className='game-box'>
-        <img src='Otaku-Eyes/src/assets/logo.png' className='logo-container'></img> 
+        <img src='Otaku-Eyes/src/assets/logo.png' alt='Otaku Eyes' className='logo-container'></img> 
         <h1>Anime Guessing Game</h1>      
         <Game />
       </div>
